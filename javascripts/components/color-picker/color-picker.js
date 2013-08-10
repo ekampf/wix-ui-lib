@@ -57,7 +57,11 @@
 
         createColoredElm : function () {
             var inner = $('<span>').addClass('inner');
-            inner.css('background-color', this.options.startWithColor);
+            var startColor = this.options.startWithColor;
+            if (this.$el.data('color')) {
+              startColor = this.$el.data('color')
+            }
+            inner.css('background-color', startColor);
             this.$el.parent().append(inner);
             this.$el.addClass('color-selector')
         },
@@ -329,6 +333,7 @@
                     selected_color: selectedColor.hex
                 }
 
+                this.$el.data('color', selectedColor.hex);
                 $(document).trigger('colorChanged', data);
 
                 return false;
